@@ -64,7 +64,7 @@ class HomeViewController: UIViewController {
     }
     
     private func handleDeepLink(action: String) {
-        BlazeSDKInteractor.shared.dismissStoryPlayer()
+        BlazeSDKInteractor.shared.dismissCurrentPlayer()
         print("handle deep link")
     }
     
@@ -76,14 +76,16 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: WidgetDelegate {
-
+    func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, result: BlazeResult) {
+        refreshControl.endRefreshing()
+        switch result {
+        case .success():  print("onWidgetDataLoadComplete delegate, widgetId: \(widgetId), number of items: \(itemsCount)")
+        case .failure(let error): print("onWidgetDataLoadComplete with error delegate, widgetId: \(widgetId), error: \(error.errorMessage)")
+        }
+    }
+    
     func onWidgetDataLoadStarted(widgetId: String) {
         print("onWidgetDataLoadStarted delegate, widgetId: \(widgetId)")
-    }
-
-    func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, error: String?) {
-        refreshControl.endRefreshing()
-        print("onWidgetDataLoadComplete delegate, widgetId: \(widgetId), number of items: \(itemsCount), error: \(error ?? "No Error")")
     }
 
     func onWidgetPlayerDismissed(widgetId: String) {

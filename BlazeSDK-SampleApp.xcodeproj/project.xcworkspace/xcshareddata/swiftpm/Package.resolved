@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/WSCSports/BlazeSDK-iOS-Specs",
       "state" : {
-        "revision" : "e118bb2097ca0393f2ee682678139e80141ce7f0",
-        "version" : "0.0.48"
+        "revision" : "acec92b34700dfd21810cd4d91fcc1378c5db26a",
+        "version" : "0.0.50"
       }
     }
   ],

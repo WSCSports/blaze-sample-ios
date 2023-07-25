@@ -35,16 +35,20 @@ final class BlazeSDKInteractor {
         blazeSdk.delegate = self
     }
     
-    func dismissStoryPlayer() {
+    func dismissCurrentPlayer() {
         blazeSdk.dismissCurrentPlayer()
     }
     
-    private func handleBlazeSdkInitalError(for error: Error) {
-        print("Error message in blaze sdk: \(error.localizedDescription)")
+    private func handleBlazeSdkInitalError(for error: BlazeError) {
+        print("Error message in blaze sdk: \(error.errorMessage)")
     }
 }
 
 extension BlazeSDKInteractor: BlazeSDKDelegate {
+    func onErrorThrown(_ error: BlazeError) {
+        print("onErrorThrown delegate, error: \(error.errorMessage)")
+    }
+    
     func onEventTriggered(eventType: BlazeAnalytics.EventType, eventData: BlazeAnalytics.EventData) {
         print("onEventTriggered delegate, eventType: \(eventType), eventData: \(eventData)")
     }
