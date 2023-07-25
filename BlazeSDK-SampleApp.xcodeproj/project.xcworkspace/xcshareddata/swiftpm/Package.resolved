@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "blazesdk-ios-specs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WSCSports/BlazeSDK-iOS-Specs",
+      "state" : {
+        "revision" : "e118bb2097ca0393f2ee682678139e80141ce7f0",
+        "version" : "0.0.48"
+      }
+    }
+  ],
+  "version" : 2
+}
