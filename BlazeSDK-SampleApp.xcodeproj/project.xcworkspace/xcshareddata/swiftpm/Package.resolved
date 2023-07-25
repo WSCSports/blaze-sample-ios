@@ -3,7 +3,7 @@
     {
       "identity" : "blazesdk-ios-specs",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/WSCSports/BlazeSDK-iOS-Specs",
+      "location" : "https://github.com/WSCSports/blaze-specs-ios",
       "state" : {
         "revision" : "acec92b34700dfd21810cd4d91fcc1378c5db26a",
         "version" : "0.0.50"
