@@ -1,22 +1,22 @@
 //
-//  HomeViewController.swift
+//  MomentsViewController.swift
 //  BlazeSDK-SampleApp
 //
-//  Created by Dor Zafrir on 19/07/2023.
+//  Created by Dor Zafrir on 17/08/2023.
 //
 
 import UIKit
 import BlazeSDK
 
-class HomeViewController: UIViewController {
+class MomentsViewController: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var viewToEmbedRowView: UIView!
     @IBOutlet weak var viewToEmbedGridView: UIView!
     
-    private var storiesRowWidgetView: BlazeStoriesWidgetRowView?
-    private var storiesGridWidgetView: BlazeStoriesWidgetGridView?
+    private var momentsWidgetRowView: BlazeMomentsWidgetRowView?
+    private var momentsWidgetGridView: BlazeMomentsWidgetGridView?
     
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -26,8 +26,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupStoriesRowWidget()
-        setupStoriesGridWidget()
+        setupMomentsRowWidget()
+        setupMomentsGridWidget()
         scrollView.refreshControl = refreshControl
     }
     
@@ -41,26 +41,27 @@ class HomeViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated:true)
     }
     
-    private func setupStoriesRowWidget() {
-        var layout = BlazeStoriesWidgetRowView.circleLayout()
-        storiesRowWidgetView = BlazeStoriesWidgetRowView(layout: layout)
-        storiesRowWidgetView?.widgetDelegate = self
-        storiesRowWidgetView?.embedInView(viewToEmbedRowView)
-        storiesRowWidgetView?.labels = .singleLabel(BlazeSDKInteractor.shared.storiesRowWidgetLabel)
-        storiesRowWidgetView?.widgetIdentifier = "Recent Stories widget"
-        storiesRowWidgetView?.reloadData(progressType: .skeleton)
+    private func setupMomentsRowWidget() {
+        var layout = BlazeMomentsWidgetRowView.rectangleLayout()
+        layout.maxDisplayItemsCount = 6
+        momentsWidgetRowView = BlazeMomentsWidgetRowView(layout: layout)
+        momentsWidgetRowView?.widgetDelegate = self
+        momentsWidgetRowView?.embedInView(viewToEmbedRowView)
+        momentsWidgetRowView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsRowWidgetLabel))
+        momentsWidgetRowView?.widgetIdentifier = "Moments Row Widget"
+        momentsWidgetRowView?.reloadData(progressType: .skeleton)
     }
     
-    private func setupStoriesGridWidget() {
-        var layout = BlazeStoriesWidgetGridView.twoColumnGridLayout()
-        storiesGridWidgetView = BlazeStoriesWidgetGridView(layout: layout)
-        storiesGridWidgetView?.widgetDelegate = self
-        storiesGridWidgetView?.embedInView(viewToEmbedGridView)
-        storiesGridWidgetView?.labels = .singleLabel(BlazeSDKInteractor.shared.storiesGridWidgetLabel)
-        storiesGridWidgetView?.widgetIdentifier = "Top Stories widget"
-        storiesGridWidgetView?.sizeLimit = 6
-        storiesGridWidgetView?.adjustSizeAutomatically = true
-        storiesGridWidgetView?.reloadData(progressType: .skeleton)
+    private func setupMomentsGridWidget() {
+        let layout = BlazeMomentsWidgetGridView.twoColumnGridLayout()
+        momentsWidgetGridView = BlazeMomentsWidgetGridView(layout: layout)
+        momentsWidgetGridView?.widgetDelegate = self
+        momentsWidgetGridView?.adjustSizeAutomatically = true
+        momentsWidgetGridView?.embedInView(viewToEmbedGridView)
+        momentsWidgetGridView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsGridWidgetLabel))
+        momentsWidgetGridView?.widgetIdentifier = "Moments Grid Widget"
+        momentsWidgetGridView?.refreshControl = refreshControl
+        momentsWidgetGridView?.reloadData(progressType: .skeleton)
     }
     
     private func handleDeepLink(action: String) {
@@ -69,13 +70,13 @@ class HomeViewController: UIViewController {
     }
     
     @objc func pullToRefreshTriggered(refreshControl: UIRefreshControl) {
-        storiesRowWidgetView?.reloadData(progressType: .silent)
-        storiesGridWidgetView?.reloadData(progressType: .silent)
+        momentsWidgetRowView?.reloadData(progressType: .silent)
+        momentsWidgetGridView?.reloadData(progressType: .silent)
     }
     
 }
 
-extension HomeViewController: WidgetDelegate {
+extension MomentsViewController: WidgetDelegate {
     func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, result: BlazeResult) {
         refreshControl.endRefreshing()
         switch result {
