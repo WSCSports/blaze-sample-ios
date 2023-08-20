@@ -12,12 +12,13 @@
 		15231CB52A680DD600DE5360 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15231CB42A680DD600DE5360 /* ViewController.swift */; };
 		15231CBA2A680DD600DE5360 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15231CB92A680DD600DE5360 /* Assets.xcassets */; };
 		15231CBD2A680DD600DE5360 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15231CBB2A680DD600DE5360 /* LaunchScreen.storyboard */; };
+		15B03CDD2A8E760900DA6BCD /* MomentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B03CDC2A8E760900DA6BCD /* MomentsViewController.swift */; };
 		15D5EE412A680FAB00D76518 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5EE402A680FAB00D76518 /* LaunchViewController.swift */; };
 		15D5EE442A68104400D76518 /* BlazeSDKInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5EE432A68104400D76518 /* BlazeSDKInteractor.swift */; };
 		15D5EE472A68123700D76518 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15D5EE462A68123700D76518 /* Main.storyboard */; };
 		15D5EE492A68125C00D76518 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5EE482A68125C00D76518 /* TabBarViewController.swift */; };
 		15D5EE4D2A68131000D76518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5EE4C2A68131000D76518 /* HomeViewController.swift */; };
-		15E22A8B2A70F92000258FD3 /* BlazeSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 15E22A8A2A70F92000258FD3 /* BlazeSDK */; };
+		15E5337C2A9259CC00D2960D /* BlazeSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 15E5337B2A9259CC00D2960D /* BlazeSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		15231CB92A680DD600DE5360 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		15231CBC2A680DD600DE5360 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15231CBE2A680DD600DE5360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15B03CDC2A8E760900DA6BCD /* MomentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsViewController.swift; sourceTree = "<group>"; };
 		15D5EE402A680FAB00D76518 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		15D5EE432A68104400D76518 /* BlazeSDKInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlazeSDKInteractor.swift; sourceTree = "<group>"; };
 		15D5EE462A68123700D76518 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -40,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15E22A8B2A70F92000258FD3 /* BlazeSDK in Frameworks */,
+				15E5337C2A9259CC00D2960D /* BlazeSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +81,14 @@
 			path = "BlazeSDK-SampleApp";
 			sourceTree = "<group>";
 		};
+		15B03CDB2A8E75FA00DA6BCD /* MomentsTab */ = {
+			isa = PBXGroup;
+			children = (
+				15B03CDC2A8E760900DA6BCD /* MomentsViewController.swift */,
+			);
+			path = MomentsTab;
+			sourceTree = "<group>";
+		};
 		15D5EE3F2A680F9D00D76518 /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				15D5EE4A2A6812E400D76518 /* TabBar */,
-				15D5EE4B2A6812F000D76518 /* HomeTab */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -109,6 +118,8 @@
 			children = (
 				15D5EE462A68123700D76518 /* Main.storyboard */,
 				15D5EE482A68125C00D76518 /* TabBarViewController.swift */,
+				15D5EE4B2A6812F000D76518 /* HomeTab */,
+				15B03CDB2A8E75FA00DA6BCD /* MomentsTab */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -138,7 +149,7 @@
 			);
 			name = "BlazeSDK-SampleApp";
 			packageProductDependencies = (
-				15E22A8A2A70F92000258FD3 /* BlazeSDK */,
+				15E5337B2A9259CC00D2960D /* BlazeSDK */,
 			);
 			productName = "BlazeSDK-SampleApp";
 			productReference = 15231CAD2A680DD600DE5360 /* BlazeSDK-SampleApp.app */;
@@ -169,7 +180,7 @@
 			);
 			mainGroup = 15231CA42A680DD600DE5360;
 			packageReferences = (
-				15E22A892A70F92000258FD3 /* XCRemoteSwiftPackageReference "blaze-specs-ios" */,
+				15E5337A2A9259CC00D2960D /* XCRemoteSwiftPackageReference "blaze-specs-ios" */,
 			);
 			productRefGroup = 15231CAE2A680DD600DE5360 /* Products */;
 			projectDirPath = "";
@@ -198,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B03CDD2A8E760900DA6BCD /* MomentsViewController.swift in Sources */,
 				15231CB52A680DD600DE5360 /* ViewController.swift in Sources */,
 				15D5EE442A68104400D76518 /* BlazeSDKInteractor.swift in Sources */,
 				15231CB12A680DD600DE5360 /* AppDelegate.swift in Sources */,
@@ -422,7 +434,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		15E22A892A70F92000258FD3 /* XCRemoteSwiftPackageReference "blaze-specs-ios" */ = {
+		15E5337A2A9259CC00D2960D /* XCRemoteSwiftPackageReference "blaze-specs-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WSCSports/blaze-specs-ios.git";
 			requirement = {
@@ -433,9 +445,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		15E22A8A2A70F92000258FD3 /* BlazeSDK */ = {
+		15E5337B2A9259CC00D2960D /* BlazeSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 15E22A892A70F92000258FD3 /* XCRemoteSwiftPackageReference "blaze-specs-ios" */;
+			package = 15E5337A2A9259CC00D2960D /* XCRemoteSwiftPackageReference "blaze-specs-ios" */;
 			productName = BlazeSDK;
 		};
 /* End XCSwiftPackageProductDependency section */
