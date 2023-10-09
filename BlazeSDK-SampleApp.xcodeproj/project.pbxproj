@@ -19,6 +19,7 @@
 		15D5EE492A68125C00D76518 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5EE482A68125C00D76518 /* TabBarViewController.swift */; };
 		15D5EE4D2A68131000D76518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D5EE4C2A68131000D76518 /* HomeViewController.swift */; };
 		15E5337C2A9259CC00D2960D /* BlazeSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 15E5337B2A9259CC00D2960D /* BlazeSDK */; };
+		15F9AB492AD4592B009F291E /* MomentsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9AB482AD4592B009F291E /* MomentsContainerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		15D5EE462A68123700D76518 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		15D5EE482A68125C00D76518 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		15D5EE4C2A68131000D76518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		15F9AB482AD4592B009F291E /* MomentsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentsContainerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,12 +83,12 @@
 			path = "BlazeSDK-SampleApp";
 			sourceTree = "<group>";
 		};
-		15B03CDB2A8E75FA00DA6BCD /* MomentsTab */ = {
+		15B03CDB2A8E75FA00DA6BCD /* MomentsWidgetsTab */ = {
 			isa = PBXGroup;
 			children = (
 				15B03CDC2A8E760900DA6BCD /* MomentsViewController.swift */,
 			);
-			path = MomentsTab;
+			path = MomentsWidgetsTab;
 			sourceTree = "<group>";
 		};
 		15D5EE3F2A680F9D00D76518 /* LaunchScreen */ = {
@@ -119,7 +121,8 @@
 				15D5EE462A68123700D76518 /* Main.storyboard */,
 				15D5EE482A68125C00D76518 /* TabBarViewController.swift */,
 				15D5EE4B2A6812F000D76518 /* HomeTab */,
-				15B03CDB2A8E75FA00DA6BCD /* MomentsTab */,
+				15B03CDB2A8E75FA00DA6BCD /* MomentsWidgetsTab */,
+				15F9AB472AD458F8009F291E /* MomentsContainerTab */,
 			);
 			path = TabBar;
 			sourceTree = "<group>";
@@ -130,6 +133,14 @@
 				15D5EE4C2A68131000D76518 /* HomeViewController.swift */,
 			);
 			path = HomeTab;
+			sourceTree = "<group>";
+		};
+		15F9AB472AD458F8009F291E /* MomentsContainerTab */ = {
+			isa = PBXGroup;
+			children = (
+				15F9AB482AD4592B009F291E /* MomentsContainerViewController.swift */,
+			);
+			path = MomentsContainerTab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +226,7 @@
 				15231CB12A680DD600DE5360 /* AppDelegate.swift in Sources */,
 				15231CB32A680DD600DE5360 /* SceneDelegate.swift in Sources */,
 				15D5EE492A68125C00D76518 /* TabBarViewController.swift in Sources */,
+				15F9AB492AD4592B009F291E /* MomentsContainerViewController.swift in Sources */,
 				15D5EE4D2A68131000D76518 /* HomeViewController.swift in Sources */,
 				15D5EE412A680FAB00D76518 /* LaunchViewController.swift in Sources */,
 			);
