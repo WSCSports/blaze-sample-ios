@@ -26,8 +26,7 @@ struct SwiftUIHomeView: View {
                     .padding([.top, .leading])
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                BlazeSwiftUIStoriesRowWidgetView(viewModel: viewModel.storiesRowViewModel) { delegateEvent in
-                }
+                BlazeSwiftUIStoriesRowWidgetView(viewModel: viewModel.storiesRowViewModel)
                 .aspectRatio(16.0/9, contentMode: .fit)
                 .padding()
                 

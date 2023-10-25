@@ -16,17 +16,25 @@ final class HomeViewModel: ObservableObject {
     private static var momentsRowDataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsRowWidgetLabel))
     private static var storiesGridDataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.storiesGridWidgetLabel))
     
-    @Published var storiesRowViewModel: BlazeSwiftUIStoriesWidgetViewModel
-    @Published var storiesGridViewModel: BlazeSwiftUIStoriesWidgetViewModel
-    @Published var momentsRowViewModel: BlazeSwiftUIMomentsWidgetViewModel
+    @Published var storiesRowViewModel: BlazeSwiftUIStoriesWidgetViewModel!
+    @Published var storiesGridViewModel: BlazeSwiftUIStoriesWidgetViewModel!
+    @Published var momentsRowViewModel: BlazeSwiftUIMomentsWidgetViewModel!
         
     init() {
-        self.storiesRowViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesRowWidgetView.singleItemHorizontalRectangleLayout(), dataSourceType: HomeViewModel.storiesRowDataSourceType))
+        setupWidgets()
+    }
+    
+    
+    private func setupWidgets() {
+        // setup stories row widget
+        self.storiesRowViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesRowWidgetView.singleItemHorizontalRectangleLayout(), dataSourceType: HomeViewModel.storiesRowDataSourceType), delegate: self)
 
-        self.momentsRowViewModel = BlazeSwiftUIMomentsWidgetViewModel(dataSourceType: HomeViewModel.momentsRowDataSourceType, layout: BlazeSwiftUIMomentsRowWidgetView.rectangleLayout())
+        // setup moments row widget
+        self.momentsRowViewModel = BlazeSwiftUIMomentsWidgetViewModel(dataSourceType: HomeViewModel.momentsRowDataSourceType, layout: BlazeSwiftUIMomentsRowWidgetView.rectangleLayout(), delegate: self)
 
-        let storiesGridconfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesGridWidgetView.twoColumnGridLayout(), dataSourceType: HomeViewModel.storiesGridDataSourceType, sizeLimit: 4, adjustSizeAutomatically: true)
-        self.storiesGridViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: storiesGridconfiguration)
+        // setup stories grid widget
+        let storiesGridConfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesGridWidgetView.twoColumnGridLayout(), dataSourceType: HomeViewModel.storiesGridDataSourceType, sizeLimit: 4, adjustSizeAutomatically: true)
+        self.storiesGridViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: storiesGridConfiguration, delegate: self)
     }
     
     
@@ -51,4 +59,25 @@ final class HomeViewModel: ObservableObject {
     func setMomentsRowDataSourceType(_ dataSourceType: BlazeDataSourceType, progressType: ProgressType) {
         momentsRowViewModel.updateDataSourceType(dataSourceType, progressType: progressType)
     }
+}
+
+extension HomeViewModel: WidgetDelegate {
+    func onWidgetDataLoadStarted(widgetId: String) {
+        print("onWidgetDataLoadStarted event. widgetId: \(widgetId)")
+    }
+    
+    func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, result: BlazeSDK.BlazeResult) {
+        print("onWidgetDataLoadComplete event. widgetId: \(widgetId), itemsCount: \(itemsCount)")
+    }
+    
+    func onWidgetPlayerDismissed(widgetId: String) {
+        print("onWidgetPlayerDismissed event. widgetId: \(widgetId)")
+    }
+    
+    func onTriggerCTA(widgetId: String, actionType: String, actionParam: String) -> Bool {
+        // On false the SDK will handle the CTA
+        return false
+    }
+    
+    
 }
