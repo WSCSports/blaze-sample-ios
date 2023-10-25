@@ -109,6 +109,7 @@
                         <segue destination="LOe-S0-SLR" kind="relationship" relationship="viewControllers" id="k4H-2B-dlw"/>
                         <segue destination="bNe-nS-OTE" kind="relationship" relationship="viewControllers" id="Zxs-tL-QBx"/>
                         <segue destination="nxH-Cs-oLr" kind="relationship" relationship="viewControllers" id="mBm-Ef-aMl"/>
+                        <segue destination="jpb-8G-Ez7" kind="relationship" relationship="viewControllers" id="IY9-sk-erw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6O9-sV-Hbz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -279,6 +280,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hCl-Dm-xqZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="164" y="768"/>
+        </scene>
+        <!--SwiftUIHomeViewController-->
+        <scene sceneID="ef1-72-Ye4">
+            <objects>
+                <viewController id="jpb-8G-Ez7" userLabel="SwiftUIHomeViewController" customClass="SwiftUIHomeViewController" customModule="BlazeSDK_SampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="a8C-j0-cYq">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="cYK-zk-FXc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="SwiftUI" id="prJ-7x-gIR" userLabel="HomeSwiftUI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DeV-ck-6sG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1089" y="-158"/>
         </scene>
     </scenes>
     <resources>
