@@ -37,8 +37,8 @@ final class BlazeSDKInteractor {
     private var momentsContainersDic: [String: BlazeMomentsPlayerContainer] = [:]
     
     func initBlazeSDK() {
-        Blaze.shared.initialize(apiKey: apiKey, cachingSize: cachingSize, prefetchingPolicy: prefetchLevel) { [weak self] error in
-            self?.handleBlazeSdkInitalError(for: error)
+        Blaze.shared.initialize(apiKey: apiKey, cachingSize: cachingSize, prefetchingPolicy: prefetchLevel) { [weak self] result in
+            self?.handleBlazeSdkInitalResult(for: result)
         }
         
         blazeSdk.delegate = self
@@ -59,8 +59,14 @@ final class BlazeSDKInteractor {
         playerContainer.startPlaying(in: containerVC, containerView: containerView)
     }
     
-    private func handleBlazeSdkInitalError(for error: BlazeError) {
-        print("Error message in blaze sdk: \(error.errorMessage)")
+    private func handleBlazeSdkInitalResult(for result: BlazeResult) {
+        switch result {
+        case .success:
+            print("SDK successfully initialized")
+        case .failure(let error):
+            print("Error message in blaze sdk: \(error.errorMessage)")
+        }
+//
     }
 }
 
