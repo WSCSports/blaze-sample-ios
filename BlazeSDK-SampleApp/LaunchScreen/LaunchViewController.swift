@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class LaunchViewController: UIViewController {
     
@@ -15,11 +16,16 @@ class LaunchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        initializeAds()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupInitalAppScreen()
+    }
+    
+    private func initializeAds() {
+        GADMobileAds.sharedInstance().start()
     }
     
     private func setupInitalAppScreen() {

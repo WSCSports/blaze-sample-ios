@@ -41,6 +41,7 @@ final class BlazeSDKInteractor {
             self?.handleBlazeSdkInitalResult(for: result)
         }
         
+        blazeSdk.adsHandler = AdsHandler()
         blazeSdk.delegate = self
     }
     
