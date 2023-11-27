@@ -519,7 +519,7 @@
 			repositoryURL = "https://github.com/WSCSports/blaze-specs-ios.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.2;
+				minimumVersion = 0.4.0;
 			};
 		};
 		1590FDC52B00DA9F00FE9EBB /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {

@@ -37,7 +37,7 @@ final class BlazeSDKInteractor {
     private var momentsContainersDic: [String: BlazeMomentsPlayerContainer] = [:]
     
     func initBlazeSDK() {
-        Blaze.shared.initialize(apiKey: apiKey, cachingSize: cachingSize, prefetchingPolicy: prefetchLevel) { [weak self] result in
+        Blaze.shared.initialize(apiKey: apiKey, cachingSize: cachingSize, prefetchingPolicy: prefetchLevel, geo: nil) { [weak self] result in
             self?.handleBlazeSdkInitalResult(for: result)
         }
         
