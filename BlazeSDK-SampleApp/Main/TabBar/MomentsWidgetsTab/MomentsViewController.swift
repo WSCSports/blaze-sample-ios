@@ -76,7 +76,7 @@ class MomentsViewController: UIViewController {
     
 }
 
-extension MomentsViewController: WidgetDelegate {
+extension MomentsViewController: BlazeWidgetDelegate {
     func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, result: BlazeResult) {
         refreshControl.endRefreshing()
         switch result {

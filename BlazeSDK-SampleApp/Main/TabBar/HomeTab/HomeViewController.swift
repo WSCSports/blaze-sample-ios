@@ -75,7 +75,7 @@ class HomeViewController: UIViewController {
     
 }
 
-extension HomeViewController: WidgetDelegate {
+extension HomeViewController: BlazeWidgetDelegate {
     func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, result: BlazeResult) {
         refreshControl.endRefreshing()
         switch result {

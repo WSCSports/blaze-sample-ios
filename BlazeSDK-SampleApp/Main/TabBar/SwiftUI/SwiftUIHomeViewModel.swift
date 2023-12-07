@@ -38,7 +38,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     
-    func reloadData(progressType: ProgressType) {
+    func reloadData(progressType: BlazeProgressType) {
         storiesRowViewModel.reloadData(progressType: progressType)
         momentsRowViewModel.reloadData(progressType: progressType)
         storiesGridViewModel.reloadData(progressType: progressType)
@@ -52,16 +52,16 @@ final class HomeViewModel: ObservableObject {
         momentsRowViewModel.setLayout(layout)
     }
 
-    func setStoriesRowDataSourceType(_ dataSourceType: BlazeDataSourceType, progressType: ProgressType) {
+    func setStoriesRowDataSourceType(_ dataSourceType: BlazeDataSourceType, progressType: BlazeProgressType) {
         storiesRowViewModel.updateDataSourceType(dataSourceType, progressType: progressType)
     }
 
-    func setMomentsRowDataSourceType(_ dataSourceType: BlazeDataSourceType, progressType: ProgressType) {
+    func setMomentsRowDataSourceType(_ dataSourceType: BlazeDataSourceType, progressType: BlazeProgressType) {
         momentsRowViewModel.updateDataSourceType(dataSourceType, progressType: progressType)
     }
 }
 
-extension HomeViewModel: WidgetDelegate {
+extension HomeViewModel: BlazeWidgetDelegate {
     func onWidgetDataLoadStarted(widgetId: String) {
         print("onWidgetDataLoadStarted event. widgetId: \(widgetId)")
     }

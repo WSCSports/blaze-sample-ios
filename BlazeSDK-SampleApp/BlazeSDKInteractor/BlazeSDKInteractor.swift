@@ -25,7 +25,7 @@ final class BlazeSDKInteractor {
     
     private let blazeSdk = Blaze.shared
     
-    private var prefetchLevel: CachePolicyLevel = .Default
+    private var prefetchLevel: BlazeCachePolicyLevel = .Default
     private var apiKey: String = Constants.apiKey
     private var cachingSize: Int = Constants.defaultCacheSize
     private(set) var storiesRowWidgetLabel: String = Constants.storiesRowLabel
@@ -76,8 +76,8 @@ extension BlazeSDKInteractor: BlazeSDKDelegate {
         print("onErrorThrown delegate, error: \(error.errorMessage)")
     }
     
-    func onEventTriggered(eventType: BlazeAnalytics.EventType, eventData: BlazeAnalytics.EventData) {
-        print("onEventTriggered delegate, eventType: \(eventType), eventData: \(eventData)")
+    func onEventTriggered(eventData: BlazeAnalytics) {
+        print("onEventTriggered delegate, eventData: \(eventData)")
     }
     
     func onStoryPlayerDidAppear() {
