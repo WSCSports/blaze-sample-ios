@@ -9,10 +9,11 @@ import Foundation
 import BlazeSDK
 import GoogleMobileAds
 
-class AdsHandler: BlazeAdsHandler {
+class AdsHandler: BlazeGoogleCustomNativeAdsHandler {
+    
     let adsProvider = AdsProvider()
     
-    func onAdEvent(eventType: BlazeAdsHandlerEventType, adModel: BlazeAdModel) {
+    func onAdEvent(eventType: BlazeGoogleCustomNativeAdsHandlerEventType, adModel: BlazeGoogleCustomNativeAdModel) {
         switch eventType {
         case .openedAd:
             // Report the ad impression to the ad provider.
@@ -27,7 +28,7 @@ class AdsHandler: BlazeAdsHandler {
         }
     }
     
-    func provideAd(adRequestData: BlazeAdRequestData) async -> BlazeAdModel? {
+    func provideAd(adRequestData: BlazeAdRequestData) async -> BlazeGoogleCustomNativeAdModel? {
         let ads = await adsProvider.generateAd(adRequestData: adRequestData)
         return ads
     }

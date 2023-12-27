@@ -9,7 +9,7 @@ import Foundation
 import GoogleMobileAds
 import BlazeSDK
 
-extension BlazeAdModel {
+extension BlazeGoogleCustomNativeAdModel {
     
     func reportAdImpression() {
         nativeAd?.recordImpression()

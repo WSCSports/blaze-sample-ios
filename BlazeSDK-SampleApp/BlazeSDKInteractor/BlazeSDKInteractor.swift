@@ -25,7 +25,7 @@ final class BlazeSDKInteractor {
     
     private let blazeSdk = Blaze.shared
     
-    private var prefetchLevel: BlazeCachePolicyLevel = .Default
+    private var prefetchLevel: BlazeCachePolicyLevel = .High
     private var apiKey: String = Constants.apiKey
     private var cachingSize: Int = Constants.defaultCacheSize
     private(set) var storiesRowWidgetLabel: String = Constants.storiesRowLabel
@@ -41,7 +41,8 @@ final class BlazeSDKInteractor {
             self?.handleBlazeSdkInitalResult(for: result)
         }
         
-        blazeSdk.adsHandler = AdsHandler()
+        blazeSdk.googleCustomNativeAdsHandler = AdsHandler()
+        blazeSdk.imaHandler = IMAHandler()
         blazeSdk.delegate = self
     }
     

@@ -15,7 +15,7 @@ class AdsProvider {
         static let templateId = "[Your default template id]"
     }
     
-    func generateAd(adRequestData: BlazeAdRequestData) async -> BlazeAdModel? {
+    func generateAd(adRequestData: BlazeAdRequestData) async -> BlazeGoogleCustomNativeAdModel? {
         let ad = await AdManager.sharedInstance.getNativeAd(adUnitId: adRequestData.adInfo?.adUnitId ?? Constants.adUnit,
                                                             templateId: adRequestData.adInfo?.formatId ?? Constants.templateId,
                                                             additionalParams: adRequestData.adInfo?.context ?? [:])

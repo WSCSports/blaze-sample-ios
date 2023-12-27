@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/WSCSports/blaze-specs-ios.git",
       "state" : {
-        "revision" : "c5875d5a16af9f81edb7d41310f3a5398f2306ad",
-        "version" : "0.5.4"
+        "revision" : "c6e1fb7f9a86f000369a245e73bbc2ada729141e",
+        "version" : "0.6.0"
       }
     },
     {
@@ -43,6 +43,15 @@
       "state" : {
         "revision" : "e70e889c0196c76d22759eb50d6a0270ca9f1d9e",
         "version" : "2.3.1"
+      }
+    },
+    {
+      "identity" : "swift-package-manager-google-interactive-media-ads-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googleads/swift-package-manager-google-interactive-media-ads-ios",
+      "state" : {
+        "revision" : "0be133f2d7529851eed44377e28466a01534661a",
+        "version" : "3.19.2"
       }
     },
     {

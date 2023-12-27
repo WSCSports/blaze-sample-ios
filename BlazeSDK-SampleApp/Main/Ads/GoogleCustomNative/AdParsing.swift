@@ -11,7 +11,7 @@ import BlazeSDK
 
 extension GADCustomNativeAd {
     
-    func toAdModel() -> BlazeAdModel? {
+    func toAdModel() -> BlazeGoogleCustomNativeAdModel? {
         guard let creativeType = string(forKey: Ads.creativeTypeKey),
               let clickURL = string(forKey: Ads.clickURLKey),
               let advertiserName = string(forKey: Ads.advertiserNameKey),
@@ -21,7 +21,7 @@ extension GADCustomNativeAd {
             return nil
         }
 
-        var content: BlazeAdModel.Content?
+        var content: BlazeGoogleCustomNativeAdModel.Content?
         switch creativeType {
         case Ads.displayType:
             if let imageUrl = image(forKey: Ads.imageKey)?.imageURL?.absoluteString {
@@ -43,7 +43,7 @@ extension GADCustomNativeAd {
             return nil
         }
         
-        var cta: BlazeAdModel.CtaModel?
+        var cta: BlazeGoogleCustomNativeAdModel.CtaModel?
         switch clickType {
         case Ads.webKey:
             cta = .init(type: .web,
@@ -57,12 +57,12 @@ extension GADCustomNativeAd {
             break
         }
         
-        let trackingPixels: Set<BlazeAdModel.TrackingPixel> = [
+        let trackingPixels: Set<BlazeGoogleCustomNativeAdModel.TrackingPixel> = [
             .init(eventType: .openedAd,
                   url: trackingURL)
         ]
         
-        let adModel = BlazeAdModel(content: content,
+        let adModel = BlazeGoogleCustomNativeAdModel(content: content,
                               title: advertiserName,
                               cta: cta,
                               trackingPixelAdList: trackingPixels,
