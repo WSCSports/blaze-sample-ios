@@ -18,45 +18,47 @@ struct SwiftUIHomeView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .center, spacing: 12) {
-                
-                Text("Recent Stories")
-                    .font(.system(size: 20, weight: .bold))
-                    .padding([.top, .leading])
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                BlazeSwiftUIStoriesRowWidgetView(viewModel: viewModel.storiesRowViewModel)
-                .aspectRatio(16.0/9, contentMode: .fit)
-                .padding()
-                
-                HStack(alignment: .center, spacing: 12) {
-                    Text("Top Stories")
+        GeometryReader { _ in
+            ScrollView {
+                VStack(alignment: .center, spacing: 12) {
+                    
+                    Text("Recent Stories")
                         .font(.system(size: 20, weight: .bold))
-                        .padding([.leading])
+                        .padding([.top, .leading])
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    BlazeSwiftUIStoriesRowWidgetView(viewModel: viewModel.storiesRowViewModel)
+                        .aspectRatio(16.0/9, contentMode: .fit)
+                        .padding()
+                    
+                    HStack(alignment: .center, spacing: 12) {
+                        Text("Top Stories")
+                            .font(.system(size: 20, weight: .bold))
+                            .padding([.leading])
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding([.top, .bottom])
+                    
+                    BlazeSwiftUIMomentsRowWidgetView(viewModel: viewModel.momentsRowViewModel)
+                        .frame(height: 300)
+                    
+                    HStack(alignment: .center, spacing: 12) {
+                        Text("Top Stories")
+                            .font(.system(size: 20, weight: .bold))
+                            .padding([.leading])
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding([.top])
+                    
+                    BlazeSwiftUIStoriesGridWidgetView(viewModel: viewModel.storiesGridViewModel)
                 }
-                .padding([.top, .bottom])
-                
-                BlazeSwiftUIMomentsRowWidgetView(viewModel: viewModel.momentsRowViewModel)
-                    .frame(height: 300)
-                
-                HStack(alignment: .center, spacing: 12) {
-                    Text("Top Stories")
-                        .font(.system(size: 20, weight: .bold))
-                        .padding([.leading])
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding([.top])
-                
-                BlazeSwiftUIStoriesGridWidgetView(viewModel: viewModel.storiesGridViewModel)
             }
-        }
-        .onFirstAppear {
-            viewModel.reloadData(progressType: .skeleton)
-        }
-        .refreshable {
-            viewModel.reloadData(progressType: .skeleton)
+            .onFirstAppear {
+                viewModel.reloadData(progressType: .skeleton)
+            }
+            .refreshable {
+                viewModel.reloadData(progressType: .skeleton)
+            }
         }
     }
 }
