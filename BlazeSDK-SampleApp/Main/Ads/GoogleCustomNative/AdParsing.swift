@@ -59,7 +59,8 @@ extension GADCustomNativeAd {
         
         let trackingPixels: Set<BlazeGoogleCustomNativeAdModel.TrackingPixel> = [
             .init(eventType: .openedAd,
-                  url: trackingURL)
+                  url: trackingURL,
+                  customUserAgent: "[MyCustomUserAgent]")
         ]
         
         let adModel = BlazeGoogleCustomNativeAdModel(content: content,
