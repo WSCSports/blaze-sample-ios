@@ -99,30 +99,32 @@ class MomentsContainerViewController: UIViewController {
 }
 
 extension MomentsContainerViewController: BlazePlayerContainerDelegate {
-    func onDataLoadStarted(containerId: String) {
+    
+    func onDataLoadStarted(playerType: BlazePlayerType, sourceId: String?) {
         loadingState.send(true)
-        print("onDataLoadStarted delegate, containerId: \(containerId)")
+        print("onDataLoadStarted delegate, containerId: \(sourceId ?? "No source id provided")")
     }
     
-    func onDataLoadComplete(containerId: String, itemsCount: Int, result: BlazeSDK.BlazeResult) {
+    func onDataLoadComplete(playerType: BlazePlayerType, sourceId: String?, itemsCount: Int, result: BlazeResult) {
         loadingState.send(false)
         emptyState.send(itemsCount == 0)
         switch result {
         case .success():
-            print("onDataLoadComplete delegate, containerId: \(containerId), number of items: \(itemsCount)")
-        case .failure(let error): print("onDataLoadComplete with error delegate, containerId: \(containerId), error: \(error.errorMessage)")
+            print("onDataLoadComplete delegate, containerId: \(sourceId ?? "No source id provided"), number of items: \(itemsCount)")
+        case .failure(let error): print("onDataLoadComplete with error delegate, containerId: \(sourceId ?? "No source id provided"), error: \(error.errorMessage)")
         }
     }
     
-    func onContainedPlayerDismissed(containerId: String) {
-        print("onContainedPlayerDismissed delegate, containerId: \(containerId)")
+    func onPlayerDidDismiss(playerType: BlazePlayerType, sourceId: String?) {
+        print("onContainedPlayerDismissed delegate, containerId: \(sourceId ?? "No source id provided")")
     }
     
-    func onTriggerCTA(containerId: String, actionType: String, actionParam: String) -> Bool {
+    func onPlayerDidAppear(playerType: BlazePlayerType, sourceId: String?) {
+        print("onContainedPlayerDidAppear delegate, containerId: \(sourceId ?? "No source id provided")")
+    }
+    
+    func onTriggerCTA(playerType: BlazePlayerType, sourceId: String?, actionType: String, actionParam: String) -> Bool {
         return false
     }
-    
-    
-    
 
 }

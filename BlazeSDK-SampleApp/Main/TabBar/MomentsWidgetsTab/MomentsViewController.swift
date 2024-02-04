@@ -77,24 +77,29 @@ class MomentsViewController: UIViewController {
 }
 
 extension MomentsViewController: BlazeWidgetDelegate {
-    func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, result: BlazeResult) {
+    
+    func onDataLoadStarted(playerType: BlazePlayerType, sourceId: String?) {
+        print("onWidgetDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
+    }
+    
+    func onDataLoadComplete(playerType: BlazePlayerType, sourceId: String?, itemsCount: Int, result: BlazeResult) {
         refreshControl.endRefreshing()
         switch result {
-        case .success():  print("onWidgetDataLoadComplete delegate, widgetId: \(widgetId), number of items: \(itemsCount)")
-        case .failure(let error): print("onWidgetDataLoadComplete with error delegate, widgetId: \(widgetId), error: \(error.errorMessage)")
+        case .success():  print("onWidgetDataLoadComplete delegate, widgetId: \(sourceId ?? "No source id provided"), number of items: \(itemsCount)")
+        case .failure(let error): print("onWidgetDataLoadComplete with error delegate, widgetId: \(sourceId ?? "No source id provided"), error: \(error.errorMessage)")
         }
     }
     
-    func onWidgetDataLoadStarted(widgetId: String) {
-        print("onWidgetDataLoadStarted delegate, widgetId: \(widgetId)")
+    func onPlayerDidDismiss(playerType: BlazePlayerType, sourceId: String?) {
+        print("onWidgetPlayerDismissed delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
-
-    func onWidgetPlayerDismissed(widgetId: String) {
-        print("onWidgetPlayerDismissed delegate, widgetId: \(widgetId)")
+    
+    func onPlayerDidAppear(playerType: BlazePlayerType, sourceId: String?) {
+        print("onPlayerDidAppear delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
-
-    func onTriggerCTA(widgetId: String, actionType: String, actionParam: String) -> Bool {
-        print("onTriggerCTA delegate, widgetId: \(widgetId), actionType =\(actionType), actionParam: \(actionParam)")
+    
+    func onTriggerCTA(playerType: BlazePlayerType, sourceId: String?, actionType: String, actionParam: String) -> Bool {
+        print("onTriggerCTA delegate, widgetId: \(sourceId ?? "No source id provided"), actionType =\(actionType), actionParam: \(actionParam)")
         if actionType == "Web" {
             print("sdk will handle")
             return false
@@ -105,4 +110,5 @@ extension MomentsViewController: BlazeWidgetDelegate {
         }
         return false
     }
+    
 }

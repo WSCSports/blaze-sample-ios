@@ -14,7 +14,7 @@ final class HomeViewModel: ObservableObject {
     
     private static var storiesRowDataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.storiesRowWidgetLabel))
     private static var momentsRowDataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsRowWidgetLabel))
-    private static var storiesGridDataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.storiesGridWidgetLabel))
+    private static var storiesGridDataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.storiesGridWidgetLabel), maxItems: 4)
     
     @Published var storiesRowViewModel: BlazeSwiftUIStoriesWidgetViewModel!
     @Published var storiesGridViewModel: BlazeSwiftUIStoriesWidgetViewModel!
@@ -33,7 +33,7 @@ final class HomeViewModel: ObservableObject {
         self.momentsRowViewModel = BlazeSwiftUIMomentsWidgetViewModel(dataSourceType: HomeViewModel.momentsRowDataSourceType, layout: BlazeSwiftUIMomentsRowWidgetView.rectangleLayout(), delegate: self)
 
         // setup stories grid widget
-        let storiesGridConfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesGridWidgetView.twoColumnGridLayout(), dataSourceType: HomeViewModel.storiesGridDataSourceType, sizeLimit: 4, adjustSizeAutomatically: true)
+        let storiesGridConfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesGridWidgetView.twoColumnGridLayout(), dataSourceType: HomeViewModel.storiesGridDataSourceType, adjustSizeAutomatically: true)
         self.storiesGridViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: storiesGridConfiguration, delegate: self)
     }
     
@@ -62,22 +62,25 @@ final class HomeViewModel: ObservableObject {
 }
 
 extension HomeViewModel: BlazeWidgetDelegate {
-    func onWidgetDataLoadStarted(widgetId: String) {
-        print("onWidgetDataLoadStarted event. widgetId: \(widgetId)")
+    
+    func onDataLoadStarted(playerType: BlazePlayerType, sourceId: String?) {
+        print("onWidgetDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
     
-    func onWidgetDataLoadComplete(widgetId: String, itemsCount: Int, result: BlazeSDK.BlazeResult) {
-        print("onWidgetDataLoadComplete event. widgetId: \(widgetId), itemsCount: \(itemsCount)")
+    func onDataLoadComplete(playerType: BlazePlayerType, sourceId: String?, itemsCount: Int, result: BlazeResult) {
+        print("onWidgetDataLoadComplete event. widgetId: \(sourceId ?? "No source id provided"), itemsCount: \(itemsCount)")
     }
     
-    func onWidgetPlayerDismissed(widgetId: String) {
-        print("onWidgetPlayerDismissed event. widgetId: \(widgetId)")
+    func onPlayerDidDismiss(playerType: BlazePlayerType, sourceId: String?) {
+        print("onWidgetPlayerDismissed delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
     
-    func onTriggerCTA(widgetId: String, actionType: String, actionParam: String) -> Bool {
-        // On false the SDK will handle the CTA
+    func onPlayerDidAppear(playerType: BlazePlayerType, sourceId: String?) {
+        print("onPlayerDidAppear delegate, widgetId: \(sourceId ?? "No source id provided")")
+    }
+    
+    func onTriggerCTA(playerType: BlazePlayerType, sourceId: String?, actionType: String, actionParam: String) -> Bool {
         return false
     }
-    
     
 }
