@@ -14,11 +14,11 @@ final class BlazeSDKInteractor {
     struct Constants {
         static let defaultCacheSize = 500
         static let apiKey = "[API - KEY]"
-        static let storiesRowLabel = "[stories label]"
-        static let storiesGridLabel = "[stories label]"
-        static let momentsRowLabel = "[moments label]"
-        static let momentsGridLabel = "[moments label]"
-        static let momentsContainerTabLabel = "[moments Container label]"
+        static let storiesRowLabel = "live-stories"
+        static let storiesGridLabel = "top-stories"
+        static let momentsRowLabel = "moments"
+        static let momentsGridLabel = "moments"
+        static let momentsContainerTabLabel = "moments"
     }
     
     static var shared: BlazeSDKInteractor = BlazeSDKInteractor()
