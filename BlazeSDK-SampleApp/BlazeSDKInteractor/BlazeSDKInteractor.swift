@@ -25,7 +25,7 @@ final class BlazeSDKInteractor {
     
     private let blazeSdk = Blaze.shared
     
-    private var prefetchLevel: BlazeCachePolicyLevel = .High
+    private var prefetchLevel: BlazeCachePolicyLevel = .Default
     private var apiKey: String = Constants.apiKey
     private var cachingSize: Int = Constants.defaultCacheSize
     private(set) var storiesRowWidgetLabel: String = Constants.storiesRowLabel
