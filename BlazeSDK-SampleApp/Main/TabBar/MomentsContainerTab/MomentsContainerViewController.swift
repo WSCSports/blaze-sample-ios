@@ -40,13 +40,30 @@ class MomentsContainerViewController: UIViewController {
     
     private func setupMomentsTab() {
         let dataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsContainerTabLabel))
+        
         var appearance = BlazeMomentsAppearance()
+        
+        appearance.playerDisplayMode = .resizeAspectFillCenterCrop
+ 
         appearance.buttons.exit.isVisible = false
         appearance.buttons.exit.isVisibleForAds = false
-        appearance.buttons.mute.isVisible = false
-        appearance.buttons.mute.isVisibleForAds = false
-        appearance.seekBarStyle.isVisible = false
-        appearance.headerGradient.isVisible = false
+        
+        appearance.seekBarAppearance.playingSeekBarStyle.progressCornerRadius = 0
+        appearance.seekBarAppearance.pausedSeekBarStyle.progressCornerRadius = 0
+        appearance.seekBarAppearance.pausedSeekBarStyle.isThumbVisible = false
+        appearance.seekBarAppearance.bottomSpacing = 0
+        appearance.seekBarAppearance.horizontalInsets = 0
+        
+        appearance.ctaStyle.horizontalAlignment = .leading
+        appearance.ctaStyle.layoutPositioning = .ctaNextToBottomButtonsBox
+        appearance.ctaStyle.height = 32
+        appearance.ctaStyle.cornerRadius = 16
+        appearance.ctaStyle.font = .systemFont(ofSize: 14, weight: .medium)
+        appearance.ctaStyle.icon = UIImage(named: "play_icon")
+        
+        appearance.headingText = .init(font: .systemFont(ofSize: 14, weight: .light), textColor: .white, dataSource: .subtitle)
+        appearance.bodyText = .init(font: .systemFont(ofSize: 16, weight: .bold), dataSource: .description)
+        
         BlazeSDKInteractor.shared.generateMomentsTab(containerId: Constants.tabId, dataSourceType: dataSourceType, momentsAppearance: appearance, delegate: self)
     }
     

@@ -31,6 +31,7 @@ class IMAHandler: NSObject, BlazeIMAHandlerProtocol {
     func requestAds(adContainerView: UIView, adVC: UIViewController, adTag: String, initialVolume: Float) {
         // Create ad display container for ad rendering.
         self.volume = initialVolume
+        let mergedTagWithExtraParams = merged(tag: adTag, with: adExtraParams())
         adsLoader = nil
         adsManager?.destroy()
         adsLoader = IMAAdsLoader(settings: nil)
@@ -38,7 +39,7 @@ class IMAHandler: NSObject, BlazeIMAHandlerProtocol {
         let adDisplayContainer = IMAAdDisplayContainer(adContainer: adContainerView, viewController: adVC, companionSlots: nil)
         // Create an ad request with our ad tag, display container, and optional user context.
         let request = IMAAdsRequest(
-            adTagUrl: adTag,
+            adTagUrl: mergedTagWithExtraParams,
             adDisplayContainer: adDisplayContainer,
             contentPlayhead: nil,
             userContext: nil)
@@ -52,6 +53,32 @@ class IMAHandler: NSObject, BlazeIMAHandlerProtocol {
     
     private func blazeAdInfo(for ad: IMAAd?) -> BlazeImaAdInfo {
         return BlazeImaAdInfo(adId: ad?.adId, adTitle: ad?.adTitle, adDescription: ad?.adDescription, adSystem: ad?.adSystem, isSkippable: ad?.isSkippable, skipTimeOffset: ad?.skipTimeOffset, adDuration: ad?.duration, advertiserName: ad?.advertiserName)
+    }
+    
+    private func adExtraParams() -> [String: String] {
+        return [:]
+        // For Example if you want to add consent and npa params to your tag
+        /*
+        let npaKey = "npa"
+        let gdprKey = "gdpr"
+        return [npaKey: "0", gdprKey: "0"]
+         */
+    }
+    
+    private func merged(tag: String, with extraParams: [String: String]) -> String {
+        // Convert the base tag string to URLComponents
+        guard var urlComponents = URLComponents(string: tag) else { return tag }
+        extraParams.forEach { key, value in
+            // Append each extra parameter as a query item
+            let queryItem = URLQueryItem(name: key, value: value)
+            // If queryItems is nil, initialize it before appending
+            if urlComponents.queryItems == nil {
+                urlComponents.queryItems = []
+            }
+            urlComponents.queryItems?.append(queryItem)
+        }
+        let modifiedTagURL = urlComponents.url
+        return modifiedTagURL?.absoluteString ?? tag
     }
 }
 
