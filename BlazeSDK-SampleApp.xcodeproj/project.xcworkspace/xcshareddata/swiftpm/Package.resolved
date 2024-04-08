@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/WSCSports/blaze-specs-ios.git",
       "state" : {
-        "revision" : "039bcf140c33ddcf36456c15ffb8f35b9fad0044",
-        "version" : "0.10.3"
+        "revision" : "fd0ea8976fa4dc60d5febad786c892429545f5e9",
+        "version" : "0.11.1"
       }
     },
     {
