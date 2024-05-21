@@ -52,6 +52,7 @@ final class BlazeSDKInteractor {
     
     func generateMomentsTab(containerId: String, dataSourceType: BlazeDataSourceType, momentsAppearance: BlazeMomentsAppearance? = nil, delegate: BlazePlayerContainerDelegate? = nil) {
         let playerContainer = BlazeMomentsPlayerContainer(dataSourceType: dataSourceType, containerDelegate: delegate, containerIdentifier: containerId, appearance: momentsAppearance)
+        playerContainer.prepareMoments()
         momentsContainersDic[containerId] = playerContainer
     }
     
