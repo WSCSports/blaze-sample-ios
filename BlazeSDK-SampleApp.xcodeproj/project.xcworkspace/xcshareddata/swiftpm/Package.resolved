@@ -1,13 +1,12 @@
 {
-  "originHash" : "1a48856266fe4bcd21c3d970138c71d83f345ed658e02a83a58e13ccb05ad34f",
   "pins" : [
     {
       "identity" : "blaze-specs-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/WSCSports/blaze-specs-ios.git",
       "state" : {
-        "revision" : "4a225fa3fad9b9a5f086b081f5074e2740bcdaeb",
-        "version" : "0.18.1"
+        "revision" : "6ad708045d93a1045e6b54e259f27e47bb0794f0",
+        "version" : "0.19.1"
       }
     },
     {
@@ -33,10 +32,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git",
       "state" : {
-        "revision" : "9b68aa69fb508f0274853e226c734151a973c7b7",
-        "version" : "2.4.0"
+        "revision" : "459949af1286c12487a6efd76f00f3e9d951c9ba",
+        "version" : "2.5.0"
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
