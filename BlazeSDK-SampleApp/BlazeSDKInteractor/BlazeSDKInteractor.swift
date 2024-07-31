@@ -94,6 +94,7 @@ final class BlazeSDKInteractor {
         BlazeGAM.shared.enableCustomNativeAds(defaultAdsConfig: .init(adUnit: Constants.adUnit,
                                                                       templateId: Constants.templateId),
                                               delegate: gamDelegate)
+        
         BlazeIMA.shared.enableAds(delegate: imaDelegate)
     }
 }
