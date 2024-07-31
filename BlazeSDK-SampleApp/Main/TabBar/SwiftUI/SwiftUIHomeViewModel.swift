@@ -19,6 +19,8 @@ final class HomeViewModel: ObservableObject {
     @Published var storiesRowViewModel: BlazeSwiftUIStoriesWidgetViewModel!
     @Published var storiesGridViewModel: BlazeSwiftUIStoriesWidgetViewModel!
     @Published var momentsRowViewModel: BlazeSwiftUIMomentsWidgetViewModel!
+    
+    private lazy var widgetDelegate = createWidgetDelegate()
         
     init() {
         setupWidgets()
@@ -27,14 +29,14 @@ final class HomeViewModel: ObservableObject {
     
     private func setupWidgets() {
         // setup stories row widget
-        self.storiesRowViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesRowWidgetView.singleItemHorizontalRectangleLayout(), dataSourceType: HomeViewModel.storiesRowDataSourceType), delegate: self)
+        self.storiesRowViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: BlazeSwiftUIWidgetConfiguration(layout: BlazeWidgetLayout.Presets.StoriesWidget.Row.singleItemHorizontalRectangle, dataSourceType: HomeViewModel.storiesRowDataSourceType), delegate: widgetDelegate)
 
         // setup moments row widget
-        self.momentsRowViewModel = BlazeSwiftUIMomentsWidgetViewModel(dataSourceType: HomeViewModel.momentsRowDataSourceType, layout: BlazeSwiftUIMomentsRowWidgetView.rectangleLayout(), delegate: self)
+        self.momentsRowViewModel = BlazeSwiftUIMomentsWidgetViewModel(dataSourceType: HomeViewModel.momentsRowDataSourceType, layout: BlazeWidgetLayout.Presets.MomentsWidget.Row.verticalRectangles, delegate: widgetDelegate)
 
         // setup stories grid widget
-        let storiesGridConfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeSwiftUIStoriesGridWidgetView.twoColumnGridLayout(), dataSourceType: HomeViewModel.storiesGridDataSourceType, adjustSizeAutomatically: true)
-        self.storiesGridViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: storiesGridConfiguration, delegate: self)
+        let storiesGridConfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeWidgetLayout.Presets.StoriesWidget.Grid.twoColumnsVerticalRectangles, dataSourceType: HomeViewModel.storiesGridDataSourceType, adjustSizeAutomatically: true)
+        self.storiesGridViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: storiesGridConfiguration, delegate: widgetDelegate)
     }
     
     
@@ -59,24 +61,28 @@ final class HomeViewModel: ObservableObject {
     func setMomentsRowDataSourceType(_ dataSourceType: BlazeDataSourceType, progressType: BlazeProgressType) {
         momentsRowViewModel.updateDataSourceType(dataSourceType, progressType: progressType)
     }
+    
+    private func createWidgetDelegate() -> BlazeWidgetDelegate {
+        return BlazeWidgetDelegate(
+            onDataLoadStarted: { [weak self] params in
+                self?.onDataLoadStarted(playerType: params.playerType, sourceId: params.sourceId)
+            },
+            onTriggerCTA: { [weak self] params in
+                guard let self else { return false }
+                return self.onTriggerCTA(playerType: params.playerType,
+                                         sourceId: params.sourceId,
+                                         actionType: params.actionType,
+                                         actionParam: params.actionParam)
+            }
+        )
+    }
 }
 
-extension HomeViewModel: BlazeWidgetDelegate {
+extension HomeViewModel {
+    
     
     func onDataLoadStarted(playerType: BlazePlayerType, sourceId: String?) {
-        print("onWidgetDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
-    }
-    
-    func onDataLoadComplete(playerType: BlazePlayerType, sourceId: String?, itemsCount: Int, result: BlazeResult) {
-        print("onWidgetDataLoadComplete event. widgetId: \(sourceId ?? "No source id provided"), itemsCount: \(itemsCount)")
-    }
-    
-    func onPlayerDidDismiss(playerType: BlazePlayerType, sourceId: String?) {
-        print("onWidgetPlayerDismissed delegate, widgetId: \(sourceId ?? "No source id provided")")
-    }
-    
-    func onPlayerDidAppear(playerType: BlazePlayerType, sourceId: String?) {
-        print("onPlayerDidAppear delegate, widgetId: \(sourceId ?? "No source id provided")")
+        print("onDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
     
     func onTriggerCTA(playerType: BlazePlayerType, sourceId: String?, actionType: String, actionParam: String) -> Bool {

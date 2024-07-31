@@ -19,6 +19,7 @@ class MomentsContainerViewController: UIViewController {
     
     private var subscriptions = Set<AnyCancellable>()
     
+    private lazy var containerDelegate = createBlazeContainerDelegate()
     struct Constants {
         static let tabId = "MomentsContainerTab"
     }
@@ -41,30 +42,37 @@ class MomentsContainerViewController: UIViewController {
     private func setupMomentsTab() {
         let dataSourceType: BlazeDataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsContainerTabLabel))
         
-        var appearance = BlazeMomentsAppearance()
+        var momentsPlayerStyle = BlazeMomentsPlayerStyle.base()
         
-        appearance.playerDisplayMode = .resizeAspectFillCenterCrop
+        momentsPlayerStyle.playerDisplayMode = .resizeAspectFillCenterCrop
  
-        appearance.buttons.exit.isVisible = false
-        appearance.buttons.exit.isVisibleForAds = false
+        momentsPlayerStyle.buttons.exit.isVisible = false
+        momentsPlayerStyle.buttons.exit.isVisibleForAds = false
         
-        appearance.seekBarAppearance.playingSeekBarStyle.progressCornerRadius = 0
-        appearance.seekBarAppearance.pausedSeekBarStyle.progressCornerRadius = 0
-        appearance.seekBarAppearance.pausedSeekBarStyle.isThumbVisible = false
-        appearance.seekBarAppearance.bottomSpacing = 0
-        appearance.seekBarAppearance.horizontalInsets = 0
+        momentsPlayerStyle.seekBar.playingState.cornerRadius = 0
+        momentsPlayerStyle.seekBar.pausedState.cornerRadius = 0
+        momentsPlayerStyle.seekBar.pausedState.isThumbVisible = false
+        momentsPlayerStyle.seekBar.bottomSpacing = 0
+        momentsPlayerStyle.seekBar.horizontalSpacing = 0
         
-        appearance.ctaStyle.horizontalAlignment = .leading
-        appearance.ctaStyle.layoutPositioning = .ctaNextToBottomButtonsBox
-        appearance.ctaStyle.height = 32
-        appearance.ctaStyle.cornerRadius = 16
-        appearance.ctaStyle.font = .systemFont(ofSize: 14, weight: .medium)
-        appearance.ctaStyle.icon = UIImage(named: "play_icon")
+        momentsPlayerStyle.cta.horizontalAlignment = .leading
+        momentsPlayerStyle.cta.layoutPositioning = .ctaNextToBottomButtonsBox
+        momentsPlayerStyle.cta.height = 32
+        momentsPlayerStyle.cta.cornerRadius = 16
+        momentsPlayerStyle.cta.font = .systemFont(ofSize: 14, weight: .medium)
+        momentsPlayerStyle.cta.icon = UIImage(named: "play_icon")
         
-        appearance.headingText = .init(font: .systemFont(ofSize: 14, weight: .light), textColor: .white, dataSource: .subtitle)
-        appearance.bodyText = .init(font: .systemFont(ofSize: 16, weight: .bold), dataSource: .description)
+        momentsPlayerStyle.headingText.contentSource = .subtitle
+        momentsPlayerStyle.headingText.font = .systemFont(ofSize: 14, weight: .light)
+        momentsPlayerStyle.headingText.textColor = .white
         
-        BlazeSDKInteractor.shared.generateMomentsTab(containerId: Constants.tabId, dataSourceType: dataSourceType, momentsAppearance: appearance, delegate: self)
+        momentsPlayerStyle.bodyText.contentSource = .description
+        momentsPlayerStyle.bodyText.font = .systemFont(ofSize: 16, weight: .bold)
+        
+        BlazeSDKInteractor.shared.generateMomentsTab(containerId: Constants.tabId,
+                                                     dataSourceType: dataSourceType,
+                                                     momentsPlayerStyle: momentsPlayerStyle,
+                                                     delegate: createBlazeContainerDelegate())
     }
     
     private func playMoments() {
@@ -112,10 +120,34 @@ class MomentsContainerViewController: UIViewController {
         lblEmptyState.isHidden = !isEmpty
     }
 
-    
+    private func createBlazeContainerDelegate() -> BlazePlayerContainerDelegate {
+        .init { [weak self] params in
+            self?.onDataLoadStarted(playerType: params.playerType,
+                                    sourceId: params.sourceId)
+        } onDataLoadComplete: { [weak self] params in
+            self?.onDataLoadComplete(playerType: params.playerType,
+                                     sourceId: params.sourceId,
+                                     itemsCount: params.itemsCount,
+                                     result: params.result)
+        } onPlayerDidAppear: { [weak self] params in
+            self?.onPlayerDidAppear(playerType: params.playerType,
+                                    sourceId: params.sourceId)
+        } onPlayerDidDismiss: { [weak self] params in
+            self?.onPlayerDidDismiss(playerType: params.playerType,
+                                     sourceId: params.sourceId)
+        } onTriggerCTA: { [weak self] params in
+            guard let self else { return false }
+            return self.onTriggerCTA(playerType: params.playerType,
+                                     sourceId: params.sourceId,
+                                     actionType: params.actionType,
+                                     actionParam: params.actionParam)
+        }
+    }
 }
 
-extension MomentsContainerViewController: BlazePlayerContainerDelegate {
+// MARK: - Moments Container Delegate Handlers
+
+extension MomentsContainerViewController {
     
     func onDataLoadStarted(playerType: BlazePlayerType, sourceId: String?) {
         loadingState.send(true)

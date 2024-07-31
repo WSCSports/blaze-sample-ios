@@ -1,12 +1,13 @@
 {
+  "originHash" : "74837bbe3fe50ddfb67672af2006ac1d377aeea7bb60801b4a16d660619caf7b",
   "pins" : [
     {
       "identity" : "blaze-specs-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/WSCSports/blaze-specs-ios.git",
       "state" : {
-        "revision" : "6ad708045d93a1045e6b54e259f27e47bb0794f0",
-        "version" : "0.19.1"
+        "revision" : "88e7f4f75f7c5cea477ccd98a609d82d4f6c7dfb",
+        "version" : "1.0.0"
       }
     },
     {
@@ -23,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/googleads/swift-package-manager-google-mobile-ads",
       "state" : {
-        "revision" : "2e4ae78561feac7192c5d8757464546adebb4c7d",
-        "version" : "11.6.0"
+        "revision" : "6457f9651bea0d62a548ac63fa9d34aae7d0488e",
+        "version" : "11.7.0"
       }
     },
     {
@@ -37,5 +38,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

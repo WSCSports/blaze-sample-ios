@@ -11,10 +11,10 @@ import BlazeSDK
 // MARK: - SwiftUIHomeView
 struct SwiftUIHomeView: View {
     
-    @ObservedObject private var viewModel: HomeViewModel
+    @StateObject private var viewModel: HomeViewModel
     
     init() {
-        self.viewModel = HomeViewModel()
+        self._viewModel = .init(wrappedValue: .init())
     }
     
     var body: some View {
