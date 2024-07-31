@@ -98,6 +98,7 @@ final class BlazeSDKInteractor {
     }
 }
 
+// MARK: - BlaskSDKDelegate Handlers
 extension BlazeSDKInteractor {
     // Return the handler
     func onEventTriggered() -> BlazeSDKDelegate.OnEventTriggeredHandler {
