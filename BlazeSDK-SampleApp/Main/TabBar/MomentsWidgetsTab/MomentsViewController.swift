@@ -18,6 +18,8 @@ class MomentsViewController: UIViewController {
     private var momentsWidgetRowView: BlazeMomentsWidgetRowView?
     private var momentsWidgetGridView: BlazeMomentsWidgetGridView?
     
+    private lazy var widgetDelegate = createWidgetDelegate()
+    
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefreshTriggered), for: .valueChanged)
@@ -42,10 +44,10 @@ class MomentsViewController: UIViewController {
     }
     
     private func setupMomentsRowWidget() {
-        var layout = BlazeMomentsWidgetRowView.rectangleLayout()
+        var layout = BlazeWidgetLayout.Presets.MomentsWidget.Row.verticalRectangles
         layout.maxDisplayItemsCount = 6
         momentsWidgetRowView = BlazeMomentsWidgetRowView(layout: layout)
-        momentsWidgetRowView?.widgetDelegate = self
+        momentsWidgetRowView?.widgetDelegate = widgetDelegate
         momentsWidgetRowView?.embedInView(viewToEmbedRowView)
         momentsWidgetRowView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsRowWidgetLabel))
         momentsWidgetRowView?.widgetIdentifier = "Moments Row Widget"
@@ -53,9 +55,9 @@ class MomentsViewController: UIViewController {
     }
     
     private func setupMomentsGridWidget() {
-        let layout = BlazeMomentsWidgetGridView.twoColumnGridLayout()
+        var layout = BlazeWidgetLayout.Presets.MomentsWidget.Grid.twoColumnsVerticalRectangles
         momentsWidgetGridView = BlazeMomentsWidgetGridView(layout: layout)
-        momentsWidgetGridView?.widgetDelegate = self
+        momentsWidgetGridView?.widgetDelegate = widgetDelegate
         momentsWidgetGridView?.adjustSizeAutomatically = true
         momentsWidgetGridView?.embedInView(viewToEmbedGridView)
         momentsWidgetGridView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsGridWidgetLabel))
@@ -74,24 +76,49 @@ class MomentsViewController: UIViewController {
         momentsWidgetGridView?.reloadData(progressType: .silent)
     }
     
+    private func createWidgetDelegate() -> BlazeWidgetDelegate {
+        .init { [weak self] params in
+            self?.onDataLoadStarted(playerType: params.playerType,
+                                    sourceId: params.sourceId)
+        } onDataLoadComplete: { [weak self] params in
+            self?.onDataLoadComplete(playerType: params.playerType,
+                                     sourceId: params.sourceId,
+                                     itemsCount: params.itemsCount,
+                                     result: params.result)
+        } onPlayerDidAppear: { [weak self] params in
+            self?.onPlayerDidAppear(playerType: params.playerType,
+                                    sourceId: params.sourceId)
+        } onPlayerDidDismiss: { [weak self] params in
+            self?.onPlayerDidDismiss(playerType: params.playerType,
+                                     sourceId: params.sourceId)
+        } onTriggerCTA: { [weak self] params in
+            guard let self else { return false }
+            return self.onTriggerCTA(playerType: params.playerType,
+                                     sourceId: params.sourceId,
+                                     actionType: params.actionType,
+                                     actionParam: params.actionParam)
+        }
+    }
 }
 
-extension MomentsViewController: BlazeWidgetDelegate {
+// MARK: - Widget Delegate Handlers
+
+extension MomentsViewController {
     
     func onDataLoadStarted(playerType: BlazePlayerType, sourceId: String?) {
-        print("onWidgetDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
+        print("onDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
     
     func onDataLoadComplete(playerType: BlazePlayerType, sourceId: String?, itemsCount: Int, result: BlazeResult) {
         refreshControl.endRefreshing()
         switch result {
-        case .success():  print("onWidgetDataLoadComplete delegate, widgetId: \(sourceId ?? "No source id provided"), number of items: \(itemsCount)")
-        case .failure(let error): print("onWidgetDataLoadComplete with error delegate, widgetId: \(sourceId ?? "No source id provided"), error: \(error.errorMessage)")
+        case .success():  print("onDataLoadComplete delegate, widgetId: \(sourceId ?? "No source id provided"), number of items: \(itemsCount)")
+        case .failure(let error): print("onDataLoadComplete with error delegate, widgetId: \(sourceId ?? "No source id provided"), error: \(error.errorMessage)")
         }
     }
     
     func onPlayerDidDismiss(playerType: BlazePlayerType, sourceId: String?) {
-        print("onWidgetPlayerDismissed delegate, widgetId: \(sourceId ?? "No source id provided")")
+        print("onPlayerDidDismiss delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
     
     func onPlayerDidAppear(playerType: BlazePlayerType, sourceId: String?) {
@@ -110,5 +137,4 @@ extension MomentsViewController: BlazeWidgetDelegate {
         }
         return false
     }
-    
 }

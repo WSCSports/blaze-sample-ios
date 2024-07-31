@@ -18,6 +18,8 @@ class HomeViewController: UIViewController {
     private var storiesRowWidgetView: BlazeStoriesWidgetRowView?
     private var storiesGridWidgetView: BlazeStoriesWidgetGridView?
     
+    private lazy var widgetDelegate = createWidgetDelegate()
+    
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefreshTriggered), for: .valueChanged)
@@ -42,9 +44,9 @@ class HomeViewController: UIViewController {
     }
     
     private func setupStoriesRowWidget() {
-        var layout = BlazeStoriesWidgetRowView.circleLayout()
+        var layout = BlazeWidgetLayout.Presets.StoriesWidget.Row.circles
         storiesRowWidgetView = BlazeStoriesWidgetRowView(layout: layout)
-        storiesRowWidgetView?.widgetDelegate = self
+        storiesRowWidgetView?.widgetDelegate = widgetDelegate
         storiesRowWidgetView?.embedInView(viewToEmbedRowView)
         storiesRowWidgetView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.storiesRowWidgetLabel))
         storiesRowWidgetView?.widgetIdentifier = "Recent Stories widget"
@@ -52,14 +54,43 @@ class HomeViewController: UIViewController {
     }
     
     private func setupStoriesGridWidget() {
-        var layout = BlazeStoriesWidgetGridView.twoColumnGridLayout()
+        var layout = BlazeWidgetLayout.Presets.StoriesWidget.Grid.twoColumnsVerticalRectangles
         storiesGridWidgetView = BlazeStoriesWidgetGridView(layout: layout)
-        storiesGridWidgetView?.widgetDelegate = self
+        storiesGridWidgetView?.widgetDelegate = widgetDelegate
         storiesGridWidgetView?.embedInView(viewToEmbedGridView)
         storiesGridWidgetView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.storiesGridWidgetLabel), maxItems: 6)
         storiesGridWidgetView?.widgetIdentifier = "Top Stories widget"
         storiesGridWidgetView?.adjustSizeAutomatically = true
         storiesGridWidgetView?.reloadData(progressType: .skeleton)
+    }
+    
+    private func createWidgetDelegate() -> BlazeWidgetDelegate {
+        .init { [weak self] params in
+            self?.onDataLoadStarted(playerType: params.playerType,
+                                    sourceId: params.sourceId)
+        } onDataLoadComplete: { [weak self] params in
+            self?.onDataLoadComplete(playerType: params.playerType,
+                                     sourceId: params.sourceId,
+                                     itemsCount: params.itemsCount,
+                                     result: params.result)
+        } onPlayerDidAppear: { [weak self] params in
+            self?.onPlayerDidAppear(playerType: params.playerType,
+                                    sourceId: params.sourceId)
+        } onPlayerDidDismiss: { [weak self] params in
+            self?.onPlayerDidDismiss(playerType: params.playerType,
+                                     sourceId: params.sourceId)
+        } onTriggerCTA: { [weak self] params in
+            guard let self else { return false }
+            return self.onTriggerCTA(playerType: params.playerType,
+                                     sourceId: params.sourceId,
+                                     actionType: params.actionType,
+                                     actionParam: params.actionParam)
+        } onWidgetItemClicked: { [weak self] params in
+            self?.onWidgetItemClicked(widgetId: params.widgetId, 
+                                      widgetItemId: params.widgetItemId,
+                                      widgetItemTitle: params.widgetItemTitle)
+        }
+        
     }
     
     private func handleDeepLink(action: String) {
@@ -74,22 +105,24 @@ class HomeViewController: UIViewController {
     
 }
 
-extension HomeViewController: BlazeWidgetDelegate {
+// MARK: - Widget Delegate Handlers
+
+extension HomeViewController {
     
     func onDataLoadStarted(playerType: BlazePlayerType, sourceId: String?) {
-        print("onWidgetDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
+        print("onDataLoadStarted delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
     
     func onDataLoadComplete(playerType: BlazePlayerType, sourceId: String?, itemsCount: Int, result: BlazeResult) {
         refreshControl.endRefreshing()
         switch result {
-        case .success():  print("onWidgetDataLoadComplete delegate, widgetId: \(sourceId ?? "No source id provided"), number of items: \(itemsCount)")
-        case .failure(let error): print("onWidgetDataLoadComplete with error delegate, widgetId: \(sourceId ?? "No source id provided"), error: \(error.errorMessage)")
+        case .success():  print("onDataLoadComplete delegate, widgetId: \(sourceId ?? "No source id provided"), number of items: \(itemsCount)")
+        case .failure(let error): print("onDataLoadComplete with error delegate, widgetId: \(sourceId ?? "No source id provided"), error: \(error.errorMessage)")
         }
     }
     
     func onPlayerDidDismiss(playerType: BlazePlayerType, sourceId: String?) {
-        print("onWidgetPlayerDismissed delegate, widgetId: \(sourceId ?? "No source id provided")")
+        print("onPlayerDidDismiss delegate, widgetId: \(sourceId ?? "No source id provided")")
     }
     
     func onPlayerDidAppear(playerType: BlazePlayerType, sourceId: String?) {
@@ -107,5 +140,9 @@ extension HomeViewController: BlazeWidgetDelegate {
             return true
         }
         return false
+    }
+    
+    func onWidgetItemClicked(widgetId: String, widgetItemId: String, widgetItemTitle: String?) {
+        print("onWidgetItemClicked widgetId: \(widgetId), widgetItemId: \(widgetItemId), widgetItemTitle: \(widgetItemTitle ?? "No Widget Title")")
     }
 }
