@@ -58,7 +58,7 @@ class MomentsViewController: UIViewController {
         var layout = BlazeWidgetLayout.Presets.MomentsWidget.Grid.twoColumnsVerticalRectangles
         momentsWidgetGridView = BlazeMomentsWidgetGridView(layout: layout)
         momentsWidgetGridView?.widgetDelegate = widgetDelegate
-        momentsWidgetGridView?.adjustSizeAutomatically = true
+        momentsWidgetGridView?.isEmbededInScrollView = true
         momentsWidgetGridView?.embedInView(viewToEmbedGridView)
         momentsWidgetGridView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.momentsGridWidgetLabel))
         momentsWidgetGridView?.widgetIdentifier = "Moments Grid Widget"

@@ -35,7 +35,7 @@ final class HomeViewModel: ObservableObject {
         self.momentsRowViewModel = BlazeSwiftUIMomentsWidgetViewModel(dataSourceType: HomeViewModel.momentsRowDataSourceType, layout: BlazeWidgetLayout.Presets.MomentsWidget.Row.verticalRectangles, delegate: widgetDelegate)
 
         // setup stories grid widget
-        let storiesGridConfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeWidgetLayout.Presets.StoriesWidget.Grid.twoColumnsVerticalRectangles, dataSourceType: HomeViewModel.storiesGridDataSourceType, adjustSizeAutomatically: true)
+        let storiesGridConfiguration = BlazeSwiftUIWidgetConfiguration(layout: BlazeWidgetLayout.Presets.StoriesWidget.Grid.twoColumnsVerticalRectangles, dataSourceType: HomeViewModel.storiesGridDataSourceType, isEmbededInScrollView: true)
         self.storiesGridViewModel = BlazeSwiftUIStoriesWidgetViewModel(widgetConfiguration: storiesGridConfiguration, delegate: widgetDelegate)
     }
     

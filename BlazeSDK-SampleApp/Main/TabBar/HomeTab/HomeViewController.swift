@@ -60,7 +60,7 @@ class HomeViewController: UIViewController {
         storiesGridWidgetView?.embedInView(viewToEmbedGridView)
         storiesGridWidgetView?.dataSourceType = .labels(.singleLabel(BlazeSDKInteractor.shared.storiesGridWidgetLabel), maxItems: 6)
         storiesGridWidgetView?.widgetIdentifier = "Top Stories widget"
-        storiesGridWidgetView?.adjustSizeAutomatically = true
+        storiesGridWidgetView?.isEmbededInScrollView = true
         storiesGridWidgetView?.reloadData(progressType: .skeleton)
     }
     
