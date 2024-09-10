@@ -41,7 +41,9 @@ final class BlazeSDKInteractor {
     
     private var momentsContainersDic: [String: BlazeMomentsPlayerContainer] = [:]
     
-    private lazy var gamDelegate = createBlazeGAMDelegate()
+    private lazy var gamCustomNativeDelegate = createBlazeGAMCustomNativeDelegate()
+    
+    private lazy var gamBannersDelegate = createBlazeGAMBannersDelegate()
     
     private lazy var imaDelegate = createBlazeIMADelegate()
     
@@ -91,11 +93,12 @@ final class BlazeSDKInteractor {
     }
     
     private func handleSDKSuccessResult() {
-        BlazeGAM.shared.enableCustomNativeAds(defaultAdsConfig: .init(adUnit: Constants.adUnit,
+        BlazeGAM.shared.enableCustomNativeAds(defaultCustomNativeAdsConfig: .init(adUnit: Constants.adUnit,
                                                                       templateId: Constants.templateId),
-                                              delegate: gamDelegate)
+                                              delegate: gamCustomNativeDelegate)
         
         BlazeIMA.shared.enableAds(delegate: imaDelegate)
+        BlazeGAM.shared.enableBannerAds(delegate: gamBannersDelegate)
     }
 }
 
@@ -114,28 +117,28 @@ extension BlazeSDKInteractor {
     }
 }
 
-// MARK: - BlazeGAMDelegate
+// MARK: - BlazeGAMCustomNativeDelegate
 extension BlazeSDKInteractor {
-    private func createBlazeGAMDelegate() -> BlazeGAMDelegate {
-        BlazeGAMDelegate(onGAMAdError: { [weak self] error in
-            self?.onGAMAdError(error.localizedDescription)
+    private func createBlazeGAMCustomNativeDelegate() -> BlazeGAMCustomNativeAdsDelegate {
+        BlazeGAMCustomNativeAdsDelegate(onGAMAdError: { [weak self] error in
+            self?.onGAMCustomNativeAdError(error.localizedDescription)
         },
                          onGAMAdEvent: { [weak self] params in
-            self?.onGAMAdEvent(eventType: params.eventType, adData: params.adData)
+            self?.onGAMCustomNativeAdEvent(eventType: params.eventType, adData: params.adData)
         }, customGAMTargetingProperties: { [weak self] in
-            self?.customGAMProperties() ?? [:]
+            self?.customGAMCustomNativeAdsProperties() ?? [:]
         })
     }
     
-    private func onGAMAdEvent(eventType: BlazeGoogleCustomNativeAdsHandlerEventType, adData: BlazeCustomAdData) {
-        print("Received Ad event of type: \(eventType), for ad: \(adData)")
+    private func onGAMCustomNativeAdEvent(eventType: BlazeGoogleCustomNativeAdsHandlerEventType, adData: BlazeCustomNativeAdData) {
+        print("Received Custom Native Ad event of type: \(eventType), for ad: \(adData)")
     }
     
-    private func onGAMAdError(_ error: String) {
-        print("Received Ad error: \(error)")
+    private func onGAMCustomNativeAdError(_ error: String) {
+        print("Received Custom Native Ad error: \(error)")
     }
     
-    private func customGAMProperties() -> [String: String] {
+    private func customGAMCustomNativeAdsProperties() -> [String: String] {
         return [:]
         // For Example if you want to add consent and npa
         /*
@@ -145,6 +148,27 @@ extension BlazeSDKInteractor {
          */
     }
 }
+
+// MARK: - BlazeGAMBannersDelegate
+extension BlazeSDKInteractor {
+    private func createBlazeGAMBannersDelegate() -> BlazeGAMBannerAdsDelegate {
+        BlazeGAMBannerAdsDelegate(onGAMBannerAdsAdError: { [weak self] params in
+            self?.onGAMBannersAdError(params.error.localizedDescription)
+        },
+                                  onGAMBannerAdsAdEvent: { [weak self] params in
+            self?.onGAMBannersAdEvent(eventType: params.eventType, adData: params.adData)
+        })
+    }
+    
+    private func onGAMBannersAdEvent(eventType: BlazeGAMBannerHandlerEventType, adData: BlazeGAMBannerAdsAdData) {
+        print("Received Banner Ad event of type: \(eventType), for ad: \(adData)")
+    }
+    
+    private func onGAMBannersAdError(_ error: String) {
+        print("Received Banner Ad error: \(error)")
+    }
+}
+
 
 //MARK: BlazeIMADelegate
 extension BlazeSDKInteractor {
