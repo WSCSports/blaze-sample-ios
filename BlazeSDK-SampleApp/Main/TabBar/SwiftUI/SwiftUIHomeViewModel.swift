@@ -71,7 +71,7 @@ final class HomeViewModel: ObservableObject {
                 guard let self else { return false }
                 return self.onTriggerCTA(playerType: params.playerType,
                                          sourceId: params.sourceId,
-                                         actionType: params.actionType,
+                                         actionType: params.actionType.rawValue,
                                          actionParam: params.actionParam)
             }
         )
