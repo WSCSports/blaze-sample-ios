@@ -11,6 +11,7 @@ import UIKit
 import BlazeGAM
 import BlazeIMA
 import GoogleInteractiveMediaAds
+import GoogleMobileAds
 
 final class BlazeSDKInteractor {
     
@@ -118,16 +119,33 @@ extension BlazeSDKInteractor {
 }
 
 // MARK: - BlazeGAMCustomNativeDelegate
+
 extension BlazeSDKInteractor {
+    
     private func createBlazeGAMCustomNativeDelegate() -> BlazeGAMCustomNativeAdsDelegate {
-        BlazeGAMCustomNativeAdsDelegate(onGAMAdError: { [weak self] error in
+        let onGAMAdError: BlazeGAMCustomNativeAdsDelegate.OnGAMAdErrorHandler = { [weak self] error in
             self?.onGAMCustomNativeAdError(error.localizedDescription)
-        },
-                         onGAMAdEvent: { [weak self] params in
+        }
+        let onGAMAdEvent: BlazeGAMCustomNativeAdsDelegate.OnGAMAdEventHandler = { [weak self] params in
             self?.onGAMCustomNativeAdEvent(eventType: params.eventType, adData: params.adData)
-        }, customGAMTargetingProperties: { [weak self] in
+        }
+        let customGAMTargetingProperties: BlazeGAMCustomNativeAdsDelegate.CustomGAMTargetingPropertiesHandler = { [weak self] in
             self?.customGAMCustomNativeAdsProperties() ?? [:]
-        })
+        }
+        
+        let publisherProvidedId: BlazeGAMCustomNativeAdsDelegate.PublisherProvidedIdHandler = { [weak self] in
+            self?.gamCustomNativePublisherProvidedId()
+        }
+
+        let networkExtras: BlazeGAMCustomNativeAdsDelegate.NetworkExtrasHandler = { [weak self] in
+            self?.gamCustomNativeNetworkExtras()
+        }
+        
+        return BlazeGAMCustomNativeAdsDelegate(onGAMAdError: onGAMAdError,
+                                               onGAMAdEvent: onGAMAdEvent,
+                                               customGAMTargetingProperties: customGAMTargetingProperties,
+                                               publisherProvidedId: publisherProvidedId,
+                                               networkExtras: networkExtras)
     }
     
     private func onGAMCustomNativeAdEvent(eventType: BlazeGoogleCustomNativeAdsHandlerEventType, adData: BlazeCustomNativeAdData) {
@@ -147,17 +165,44 @@ extension BlazeSDKInteractor {
          return [npaKey: "0", gdprKey: "0"]
          */
     }
+    
+    private func gamCustomNativePublisherProvidedId() -> String? {
+        return nil
+        // For Example if you want to add publisher provided id
+        /*
+         return "custom publisher provided id"
+         */
+        
+    }
+    
+    private func gamCustomNativeNetworkExtras() -> GADExtras? {
+        return nil
+        // For Example if you want to add network extras
+        /*
+         let extras = GADExtras()
+         extras.additionalParameters = ["custom network extras string": "test",
+                                      "custom network extras int": 5,
+                                      "custom network extras bool": true]
+         return extras
+         */
+    }
+    
 }
 
 // MARK: - BlazeGAMBannersDelegate
+
 extension BlazeSDKInteractor {
+    
     private func createBlazeGAMBannersDelegate() -> BlazeGAMBannerAdsDelegate {
-        BlazeGAMBannerAdsDelegate(onGAMBannerAdsAdError: { [weak self] params in
+        let onGAMBannerAdsAdError: BlazeGAMBannerAdsDelegate.OnGAMBannerAdsAdErrorHandler = { [weak self] params in
             self?.onGAMBannersAdError(params.error.localizedDescription)
-        },
-                                  onGAMBannerAdsAdEvent: { [weak self] params in
+        }
+        let onGAMBannerAdsAdEvent: BlazeGAMBannerAdsDelegate.OnGAMBannerAdsAdEventHandler = { [weak self] params in
             self?.onGAMBannersAdEvent(eventType: params.eventType, adData: params.adData)
-        })
+        }
+        
+        return BlazeGAMBannerAdsDelegate(onGAMBannerAdsAdError: onGAMBannerAdsAdError,
+                                  onGAMBannerAdsAdEvent: onGAMBannerAdsAdEvent)
     }
     
     private func onGAMBannersAdEvent(eventType: BlazeGAMBannerHandlerEventType, adData: BlazeGAMBannerAdsAdData) {
@@ -167,25 +212,37 @@ extension BlazeSDKInteractor {
     private func onGAMBannersAdError(_ error: String) {
         print("Received Banner Ad error: \(error)")
     }
+    
 }
 
 
 //MARK: BlazeIMADelegate
+
 extension BlazeSDKInteractor {
     
     private func createBlazeIMADelegate() -> BlazeIMADelegate {
-        BlazeIMADelegate(onIMAAdError: { [weak self] error in
+        let onImAAdError: BlazeIMADelegate.OnIMAAdErrorHandler = { [weak self] error in
             self?.onIMAAdError(error)
-        },
-                         onIMAAdEvent: { [weak self] params in
+        }
+        let onImAAdEvent: BlazeIMADelegate.OnIMAAdEventHandler = { [weak self] params in
             self?.onIMAAdEvent(eventType: params.eventType,
                                adInfo: params.adInfo)
-        },
-                         additionalIMATagQueryParams: { [weak self] in
-            return self?.adExtraParams() ?? [:]
-        }, customIMASettings: { [weak self] in
-            return self?.customIMASettings()
-        })
+        }
+        let additionalIMATagQueryParams: BlazeIMADelegate.AdditionalIMATagQueryParamsHandler = { [weak self] in
+            self?.adExtraParams() ?? [:]
+        }
+        let customIMASettings: BlazeIMADelegate.CustomIMASettingsHandler = { [weak self] in
+            self?.customIMASettings()
+        }
+        let overrideAdTagUrl: BlazeIMADelegate.OverrideAdTagUrlHandler = { [weak self] in
+            self?.overrideAdTagUrl()
+        }
+        
+        return BlazeIMADelegate(onIMAAdError: onImAAdError,
+                                onIMAAdEvent: onImAAdEvent,
+                                additionalIMATagQueryParams: additionalIMATagQueryParams,
+                                customIMASettings: customIMASettings,
+                                overrideAdTagUrl: overrideAdTagUrl)
     }
     
     private func onIMAAdEvent(eventType: BlazeIMAHandlerEventType, adInfo: BlazeImaAdInfo) {
@@ -215,4 +272,13 @@ extension BlazeSDKInteractor {
          */
         return imaSettings
     }
+    
+    private func overrideAdTagUrl() -> String? {
+        return nil
+        // For example if you want to override the ad tag url
+        /*
+         return "overrideAdTagUrl"
+         */
+    }
+    
 }
