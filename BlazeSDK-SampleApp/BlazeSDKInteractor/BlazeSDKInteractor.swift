@@ -129,15 +129,15 @@ extension BlazeSDKInteractor {
         let onGAMAdEvent: BlazeGAMCustomNativeAdsDelegate.OnGAMAdEventHandler = { [weak self] params in
             self?.onGAMCustomNativeAdEvent(eventType: params.eventType, adData: params.adData)
         }
-        let customGAMTargetingProperties: BlazeGAMCustomNativeAdsDelegate.CustomGAMTargetingPropertiesHandler = { [weak self] in
+        let customGAMTargetingProperties: BlazeGAMCustomNativeAdsDelegate.CustomGAMTargetingPropertiesHandler = { [weak self] params in
             self?.customGAMCustomNativeAdsProperties() ?? [:]
         }
         
-        let publisherProvidedId: BlazeGAMCustomNativeAdsDelegate.PublisherProvidedIdHandler = { [weak self] in
+        let publisherProvidedId: BlazeGAMCustomNativeAdsDelegate.PublisherProvidedIdHandler = { [weak self] params in
             self?.gamCustomNativePublisherProvidedId()
         }
 
-        let networkExtras: BlazeGAMCustomNativeAdsDelegate.NetworkExtrasHandler = { [weak self] in
+        let networkExtras: BlazeGAMCustomNativeAdsDelegate.NetworkExtrasHandler = { [weak self] params in
             self?.gamCustomNativeNetworkExtras()
         }
         
@@ -228,13 +228,13 @@ extension BlazeSDKInteractor {
             self?.onIMAAdEvent(eventType: params.eventType,
                                adInfo: params.adInfo)
         }
-        let additionalIMATagQueryParams: BlazeIMADelegate.AdditionalIMATagQueryParamsHandler = { [weak self] in
+        let additionalIMATagQueryParams: BlazeIMADelegate.AdditionalIMATagQueryParamsHandler = { [weak self] params in
             self?.adExtraParams() ?? [:]
         }
-        let customIMASettings: BlazeIMADelegate.CustomIMASettingsHandler = { [weak self] in
+        let customIMASettings: BlazeIMADelegate.CustomIMASettingsHandler = { [weak self] params in
             self?.customIMASettings()
         }
-        let overrideAdTagUrl: BlazeIMADelegate.OverrideAdTagUrlHandler = { [weak self] in
+        let overrideAdTagUrl: BlazeIMADelegate.OverrideAdTagUrlHandler = { [weak self] params in
             self?.overrideAdTagUrl()
         }
         
