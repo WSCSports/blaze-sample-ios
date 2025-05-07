@@ -25,7 +25,7 @@ class LaunchViewController: UIViewController {
     }
     
     private func initializeAds() {
-        GADMobileAds.sharedInstance().start()
+        MobileAds.shared.start()
     }
     
     private func setupInitalAppScreen() {

@@ -175,7 +175,7 @@ extension BlazeSDKInteractor {
         
     }
     
-    private func gamCustomNativeNetworkExtras() -> GADExtras? {
+    private func gamCustomNativeNetworkExtras() -> Extras? {
         return nil
         // For Example if you want to add network extras
         /*
