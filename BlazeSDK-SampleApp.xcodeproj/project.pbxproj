@@ -479,7 +479,7 @@
 			repositoryURL = "https://github.com/WSCSports/blaze-specs-ios.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.10.4;
+				version = 1.11.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
