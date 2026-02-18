@@ -1,5 +1,9 @@
 # Blaze iOS Sample App
 
+## Deprecated Repository
+This sample app repository is **deprecated** and no longer maintained.
+Please use the new and improved Blaze iOS sample app instead:
+[Sample App V2](https://github.com/WSCSports/blaze-sample-ios-v2)
 
 
 ![Cocoapods Compatible](https://img.shields.io/badge/Cocoapods-Compatible-green?logo=cocoapods)
